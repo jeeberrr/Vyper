@@ -1,8 +1,15 @@
 add v20 encryption [IN DEVELOPMENT], 
+
 create more advanced obfuscation measures, 
+
 add more advanced antianalysis techniques, 
+
 make gui builder, 
+
 test mac (if you have a mac machine and are willing to test it please let me know), 
+
 add discord injection, 
+
 add crypto injection, 
+
 add more gaming accounts, 
