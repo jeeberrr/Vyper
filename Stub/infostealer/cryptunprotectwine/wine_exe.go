@@ -4,7 +4,6 @@ package main
 
 import (
 	"encoding/base64"
-	"fmt"
 	"os"
 	"unsafe"
 
@@ -23,13 +22,9 @@ func main() {
 	var in = blob{cbData: uint32(len(data)), pbData: &data[0]}
 	var out blob
 	err := windows.CryptUnprotectData((*windows.DataBlob)(unsafe.Pointer(&in)), nil, nil, 0, nil, 0, (*windows.DataBlob)(unsafe.Pointer(&out)))
-	if err != nil {
-		fmt.Printf("failed")
-		return
-	} else {
+	if err == nil {
 		outslice := unsafe.Slice(out.pbData, out.cbData)
 		decrypted := make([]byte, len(outslice))
 		copy(decrypted, outslice)
-		fmt.Printf(base64.StdEncoding.EncodeToString(decrypted))
 	}
 }
