@@ -34,7 +34,7 @@ Screenshot/Webcam Snapshot on Runtime: WINDOWS
 
 Anti-Analysis (VM & DEBUGGER DETECTION): WINDOWS, MAC, LINUX
 
-Webhook Support: DISCORD, TELEGRAM
+Webhook Support: DISCORD
 
 Browser Stealing: WINDOWS, LINUX, MAC
 
