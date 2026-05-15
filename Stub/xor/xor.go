@@ -10,8 +10,6 @@ import (
 	"runtime"
 )
 
-// ignore the error here the payload.enc is generated upon build
-//
 //go:embed payload.enc
 var encrypted []byte
 
