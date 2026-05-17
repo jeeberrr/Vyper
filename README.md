@@ -48,14 +48,12 @@ Persistance: WINDOWS, MAC, LINUX
 
 # HOW TO USE
 
-WINDOWS SPECIFIC: google how to install mingw and how to get gcc cause its a build dep, too long of a tut to link here just google or ask claude or smthn idk man.
+WINDOWS SPECIFIC: visit [here](https://phoenixnap.com/kb/install-gcc-windows) to learn how to install GCC on windows
 
 run either install or install.bat (depending if your system is linux or windows)
 
-run builder.exe
+run the builder (either builder or builder.exe)
 
-use command help
-
-go from there
+use command help to see full syntax for everything
 
 ## AI DISCLAIMER: The only parts of this code that were written by AI was the assembly (im not gonna bother learning assembly).
