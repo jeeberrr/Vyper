@@ -3,7 +3,6 @@ package config
 import (
 	"strconv"
 	"strings"
-	"time"
 
 	"vyper/Stub/antianalysis"
 	"vyper/Stub/exfiltration"
