@@ -44,7 +44,18 @@ Customized Building
 
 Obfuscation (xor): WINDOWS, LINUX, MAC
 
-
 Persistance: WINDOWS, MAC, LINUX
+
+# HOW TO USE
+
+WINDOWS SPECIFIC: google how to install mingw and how to get gcc cause its a build dep, too long of a tut to link here just google or ask claude or smthn idk man.
+
+run either install or install.bat (depending if your system is linux or windows)
+
+run builder.exe
+
+use command help
+
+go from there
 
 ## AI DISCLAIMER: The only parts of this code that were written by AI was the assembly (im not gonna bother learning assembly).
