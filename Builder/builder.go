@@ -289,7 +289,7 @@ func build(platform string) {
 		switch strings.ToLower(platform) {
 		case "windows":
 			fmt.Printf("Compiling xor payload for Windows...\n")
-            cmd = exec.Command("go", "build", "-H=windowsgui -ldflags=-s -w", "-o", "bin/payload.exe", "Stub/xor/xor.go")
+            cmd = exec.Command("go", "build", "-H=windowsgui", "-ldflags=-s -w", "-o", "bin/payload.exe", "Stub/xor/xor.go")
 			cmd.Env = append(os.Environ(), "GOOS=windows", "GOARCH=amd64")
 		case "linux":
 			fmt.Printf("Compiling xor payload for Linux...\n")
